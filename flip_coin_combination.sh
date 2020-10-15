@@ -94,7 +94,7 @@ echo ${doublet[@]}
 declare -A tripletflip
 num_of_coin=3
 tripletflip=0
-for(( count=0; count<$num_of_coin; count++ ))
+for(( count=0; count<=$num_of_coin; count++ ))
 do
 	for(( countcoin=0; countcoin<$num_of_coin; countcoin++ ))
 		do
@@ -123,19 +123,31 @@ declare -A sort_combination
 maximum=0
 temp=0
 echo "enter a number to flip coins"
-read number3
-for((index=0; index<$number3; index++))
+read n1
+for((index=0; index<$n1; index++))
 do
         for((coinindex=0; coinindex<2; coinindex++))
         do
                 r4=$(($RANDOM%2))
                         if [ $r4 -eq 0 ]
                         then
-                                coinside+=H
+                                coinside=H
                         else
-                                coinside+=T
+                                coinside=T
                         fi
         done
-sort_combination[$coinside]=$((${sort_combination[$coinside]}+1))
+sort_combination[$coinside]="$((${sort_combination[$coinside]}+1))"
 done
-echo "${sort_combonation[@]}"
+echo "${sort_combination[@]}"
+
+for j in ${!sort_combination[@]}
+do
+sort_combination[$j]=$(($(sort_combination[$j])/$n1*100))
+temp=${sort_combination[$j]}
+if [ $temp -ge $maximum ]
+then
+maximum=$temp
+new=$i
+fi
+done
+echo "maximum is $maximum=$i"
