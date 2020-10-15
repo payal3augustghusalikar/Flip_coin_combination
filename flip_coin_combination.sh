@@ -89,3 +89,30 @@ Doublet[3]="HH:$percent4"
 done
 echo "Outcomes with doublet percentage is :"
 echo ${doublet[@]}
+
+#to get triplet combination
+declare -A tripletflip
+num_of_coin=3
+tripletflip=0
+for (( count=0; count<$num_of_coin; count++ ))
+do
+	for(( countcoin=0; countcoin<$num_of_coin; countcoin++ ))
+		do
+			r3=$(( $RANDOM % 2 ))
+				if [ $r3 -eq 0 ]
+				then
+					coin+=H
+				else
+					coin+=T
+				fi
+		done
+		((tripletflip[$coin]++))
+	coin=""
+done
+
+#to find total percentage of triplet combination
+	for index in ${!tripletflip[@]}
+	do
+tripletflip[$index]="$(( ${tripletflip[$index]} * 100 / $num_of_coin ))"
+	done
+	
