@@ -47,6 +47,8 @@ singletTailPercentage="$(( $Tcount * 100 / $n ))"
 echo "singletHeadPercentage  = $singletHeadPercentage %  &  singletTailPercentage = $singletTailPercentage %"
 
 #to find doublet combination
+echo "Enter flip times for doublet"
+read n1
 count=0
 count1=0
 count2=0
@@ -59,33 +61,35 @@ percent4=0
 declare -A Doublet
 for (( i=1; i<$n; i++ ))
 do
+count=$(($count+1))
 
-	r2=$(( $RANDOM % 4 ))
+        r2=$(( $RANDOM % 4 ))
 
 if [ $r2 -eq 0 ]
 then
-	count1=$(( $count1 + 1 ))
-	percent1="$(( $count / $count * 100 ))"
+        count1=$(($count1+1))
+        percent1="$(($count*100/$count))"
 
 elif [ $r2 -eq 1 ]
 then
-	count1=$(( $count2 + 1 ))
-	percent1="$(( $count2 / $count * 100 ))"
+        count1=$(($count2+1))
+        percent1="$(($count2*100/$count))"
 
 elif [ $r2 -eq 2 ]
 then
-	count2=$(( $count2 + 1 ))
-	percent2="$(( $count2 / $count * 100 ))"
+        count2=$(($count2+1))
+        percent2="$(($count2*100/$count))"
 
 elif [ $r2 -eq 3 ]
 then
-	count3=$(( $count3 + 1 ))
-	percent3="$(( $count3 / $count * 100 ))"
+        count3=$(($count3+1))
+        percent3="$(($count3*100/$count))"
 fi
 Doublet[0]="HH:$percent1"
-Doublet[1]="HH:$percent2"
-Doublet[2]="HH:$percent3"
-Doublet[3]="HH:$percent4"
+Doublet[1]="HT:$percent2"
+Doublet[2]="TH:$percent3"
+Doublet[3]="TT:$percent4"
 done
 echo "Outcomes with doublet percentage is :"
-echo ${doublet[@]}
+echo ${Doublet[@]}
+
