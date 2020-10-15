@@ -81,3 +81,11 @@ elif [ $r2 -eq 3 ]
 then
 	count3=$(( $count3 + 1 ))
 	percent3="$(( $count3 / $count * 100 ))"
+fi
+Doublet[0]="HH:$percent1"
+Doublet[1]="HH:$percent2"
+Doublet[2]="HH:$percent3"
+Doublet[3]="HH:$percent4"
+done
+echo "Outcomes with doublet percentage is :"
+echo ${doublet[@]}
