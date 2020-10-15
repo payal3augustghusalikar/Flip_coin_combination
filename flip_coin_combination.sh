@@ -65,22 +65,22 @@ do
 if [ $r2 -eq 0 ]
 then
 	count1=$(( $count1 + 1 ))
-	percent1="$(( $count / $count * 100 ))"
+	percent1="$(( $count * 100 / $count ))"
 
 elif [ $r2 -eq 1 ]
 then
 	count1=$(( $count2 + 1 ))
-	percent1="$(( $count2 / $count * 100 ))"
+	percent1="$(( $count2 * 100 / $count ))"
 
 elif [ $r2 -eq 2 ]
 then
 	count2=$(( $count2 + 1 ))
-	percent2="$(( $count2 / $count * 100 ))"
+	percent2="$(( $count2 * 100 / $count ))"
 
 elif [ $r2 -eq 3 ]
 then
 	count3=$(( $count3 + 1 ))
-	percent3="$(( $count3 / $count * 100 ))"
+	percent3="$(( $count3 * 100 / $count ))"
 fi
 Doublet[0]="HH:$percent1"
 Doublet[1]="HH:$percent2"
@@ -94,7 +94,7 @@ echo ${doublet[@]}
 declare -A tripletflip
 num_of_coin=3
 tripletflip=0
-for (( count=0; count<$num_of_coin; count++ ))
+for(( count=0; count<$num_of_coin; count++ ))
 do
 	for(( countcoin=0; countcoin<$num_of_coin; countcoin++ ))
 		do
@@ -116,4 +116,26 @@ done
 tripletflip[$index]="$(( ${tripletflip[$index]} * 100 / $num_of_coin ))"
 	done
 echo "triplet percentage is :"
-echo {$tripletflip[@]}
+echo ${tripletflip[@]}
+
+#to sort singlet,doblet,triplet combination
+declare -A sort_combination
+maximum=0
+temp=0
+echo "enter a number to flip coins"
+read number3
+for((index=0; index<$number3; index++))
+do
+        for((coinindex=0; coinindex<2; coinindex++))
+        do
+                r4=$(($RANDOM%2))
+                        if [ $r4 -eq 0 ]
+                        then
+                                coinside+=H
+                        else
+                                coinside+=T
+                        fi
+        done
+sort_combination[$coinside]=$((${sort_combination[$coinside]}+1))
+done
+echo "${sort_combonation[@]}"
