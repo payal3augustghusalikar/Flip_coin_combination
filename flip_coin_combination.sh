@@ -115,4 +115,5 @@ done
 	do
 tripletflip[$index]="$(( ${tripletflip[$index]} * 100 / $num_of_coin ))"
 	done
-	
+echo "triplet percentage is :"
+echo {$tripletflip[@]}
