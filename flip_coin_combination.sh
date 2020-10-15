@@ -45,3 +45,39 @@ singletHeadPercentage="$(( $Hcount * 100 / $n ))"
 singletTailPercentage="$(( $Tcount * 100 / $n ))"
 
 echo "singletHeadPercentage  = $singletHeadPercentage %  &  singletTailPercentage = $singletTailPercentage %"
+
+#to find doublet combination
+count=0
+count1=0
+count2=0
+count3=0
+count4=0
+percent1=0
+percent2=0
+percent3=0
+percent4=0
+declare -A Doublet
+for (( i=1; i<$n; i++ ))
+do
+
+	r2=$(( $RANDOM % 4 ))
+
+if [ $r2 -eq 0 ]
+then
+	count1=$(( $count1 + 1 ))
+	percent1="$(( $count / $count * 100 ))"
+
+elif [ $r2 -eq 1 ]
+then
+	count1=$(( $count2 + 1 ))
+	percent1="$(( $count2 / $count * 100 ))"
+
+elif [ $r2 -eq 2 ]
+then
+	count2=$(( $count2 + 1 ))
+	percent2="$(( $count2 / $count * 100 ))"
+
+elif [ $r2 -eq 3 ]
+then
+	count3=$(( $count3 + 1 ))
+	percent3="$(( $count3 / $count * 100 ))"
