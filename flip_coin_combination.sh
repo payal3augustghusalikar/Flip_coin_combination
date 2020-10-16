@@ -10,7 +10,7 @@ singletTailPercentage=0
 
 
 declare -A singletflip
-read -p "enter number to flip coin ==> " n
+read -p "enter number to flip coin for singlet ==> " n
 echo " "
 
 while [ $i -le $n ]
@@ -63,30 +63,30 @@ percent4=0
 declare -A Doublet
 for (( i=1; i<$n1; i++ ))
 do
-count=$(($count+1))
+	count=$(($count+1))
 
-        r2=$(( $RANDOM % 4 ))
+   r2=$(( $RANDOM % 4 ))
 
-if [ $r2 -eq 0 ]
-then
+		if [ $r2 -eq 0 ]
+		then
         count1=$(($count1+1))
-        percent1="$(($count*100/$count))"
+        percent1="$(( $count1 * 100 / $n1 ))"
 
-elif [ $r2 -eq 1 ]
-then
-        count1=$(($count2+1))
-        percent1="$(($count2*100/$count))"
-
-elif [ $r2 -eq 2 ]
-then
+		elif [ $r2 -eq 1 ]
+		then
         count2=$(($count2+1))
-        percent2="$(($count2*100/$count))"
+        percent2="$(( $count2 * 100 / $n1 ))"
 
-elif [ $r2 -eq 3 ]
-then
+		elif [ $r2 -eq 2 ]
+		then
         count3=$(($count3+1))
-        percent3="$(($count3*100/$count))"
-fi
+        percent3="$(( $count3 * 100 / $n1 ))"
+
+		elif [ $r2 -eq 3 ]
+		then
+        count4=$(($count4+1))
+        percent4="$(( $count4 * 100 / $n1 ))"
+		fi
 Doublet[0]="HH:$percent1"
 Doublet[1]="HT:$percent2"
 Doublet[2]="TH:$percent3"
@@ -95,68 +95,131 @@ done
 echo "Outcomes with doublet percentage is :"
 
 echo ${Doublet[@]}
+echo ""
+
 
 #to get triplet combination
-declare -A tripletflip
-num_of_coin=3
-tripletflip=0
-for(( count=0; count<=$num_of_coin; count++ ))
+
+read -p "Enter flip times for Triplet => " n2
+
+count=0
+count1=0
+count2=0
+count3=0
+count4=0
+count5=0
+count6=0
+count7=0
+count8=0
+percent1=0
+percent2=0
+percent3=0
+percent4=0
+percent5=0
+percent6=0
+percent7=0
+percent8=0
+
+declare -A triplet
+
+for (( i=0; i<$n2; i++ ))
 do
-	for(( countcoin=0; countcoin<$num_of_coin; countcoin++ ))
-		do
-			r3=$(( $RANDOM % 2 ))
-				if [ $r3 -eq 0 ]
-				then
-					coin+=H
-				else
-					coin+=T
-				fi
-		done
-		((tripletflip[$coin]++))
-	coin=""
+   count=$(($count+1))
+
+   r2=$(( $RANDOM % 8 ))
+
+      if [ $r2 -eq 0 ]
+      then
+        count1=$(($count1+1))
+        percent1="$(( $count1 * 100 / $n2 ))"
+
+      elif [ $r2 -eq 1 ]
+      then
+        count2=$(($count2+1))
+        percent2="$(( $count2 * 100 / $n2 ))"
+
+      elif [ $r2 -eq 2 ]
+      then
+        count3=$(($count3+1))
+        percent3="$(( $count3 * 100 / $n2 ))"
+
+      elif [ $r2 -eq 3 ]
+      then
+        count4=$(($count4+1))
+        percent4="$(( $count4 * 100 / $n2 ))"
+
+      elif [ $r2 -eq 4 ]
+      then
+        count5=$(($count5+1))
+        percent5="$(( $count5 * 100 / $n2 ))"
+
+      elif [ $r2 -eq 5 ]
+      then
+        count6=$(($count6+1))
+        percent6="$(( $count6 * 100 / $n2 ))"
+
+      elif [ $r2 -eq 6 ]
+      then
+        count7=$(($count7+1))
+        percent7="$(( $count7 * 100 / $n2 ))"
+
+      elif [ $r2 -eq 7 ]
+      then
+        count8=$(($count8+1))
+        percent8="$(( $count8 * 100 / $n2 ))"
+
+      fi
+   triplet[0]="HHH:$percent1"
+   triplet[1]="HHT:$percent2"
+   triplet[2]="HTH:$percent3"
+   triplet[3]="HTT:$percent4"
+   triplet[4]="THH:$percent5"
+   triplet[5]="THT:$percent6"
+   triplet[6]="TTH:$percent7"
+   triplet[7]="TTT:$percent8"
+
 done
 
-#to find total percentage of triplet combination
-	for index in ${!tripletflip[@]}
-	do
-tripletflip[$index]="$(( ${tripletflip[$index]} * 100 / $num_of_coin ))"
-	done
-echo "triplet percentage is :"
-echo ${tripletflip[@]}
+echo "triplets outcomes in percentages are ==> : "
+echo ${triplet[@]}
+
+
+
 
 #to sort singlet,doblet,triplet combination
 declare -A sort_combination
 maximum=0
 temp=0
+
 echo "enter a number to flip coins"
-read n2
-for((index=0; index<$n1; index++))
+read n3
+for((index=0; index<$n3; index++))
 do
-        for((coinindex=0; coinindex<2; coinindex++))
-        do
-                r4=$(($RANDOM%2))
-                        if [ $r4 -eq 0 ]
-                        then
-                                coinside=H
-                        else
-                                coinside=T
-                        fi
-        done
+   for((coinindex=0; coinindex<4; coinindex++))
+   do
+      r4=$(($RANDOM%2))
+      	if [ $r4 -eq 0 ]
+      	then
+         	coinside+=H
+         else
+         	coinside+=T
+         fi
+    done
 sort_combination[$coinside]="$((${sort_combination[$coinside]}+1))"
 done
 echo "${sort_combination[@]}"
 
 for j in ${!sort_combination[@]}
 do
-sort_combination[$j]="$((${sort_combination[$j]}*100/$n2))"
-temp=${sort_combination[$j]}
-if [ $temp -ge $maximum ]
-then
-maximum=$temp
-new=$i
-fi
+	sort_combination[$j]="$(( ${sort_combination[$j]} * 100 / $n2 ))"
+	temp="${sort_combination[$j]}"
+		if (( $temp -ge $maximum ))
+		then
+			maximum=$temp
+			new=$j
+		fi
 done
-echo "maximum is $maximum=$i"
+echo "maximum winning combination is $maximum"
 
 
 
