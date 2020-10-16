@@ -119,35 +119,40 @@ echo "triplet percentage is :"
 echo ${tripletflip[@]}
 
 #to sort singlet,doblet,triplet combination
-declare -A sort_combination
-maximum=0
-temp=0
-echo "enter a number to flip coins"
-read n1
-for((index=0; index<$n1; index++))
-do
-        for((coinindex=0; coinindex<2; coinindex++))
-        do
-                r4=$(($RANDOM%2))
-                        if [ $r4 -eq 0 ]
-                        then
-                                coinside=H
-                        else
-                                coinside=T
-                        fi
-        done
-sort_combination[$coinside]="$((${sort_combination[$coinside]}+1))"
-done
-echo "${sort_combination[@]}"
+function winner()
+{
+	declare -A sort_combination
+	maximum=0
+	temp=0
+	echo "enter a number to flip coins"
+	read n3
+	for((index=0; index<$n3; index++))
+	do
+		for((coinindex=0; coinindex<2; coinindex++))
+		do
+      		r4=$(($RANDOM%2))
+            if [ $r4 -eq 0 ]
+            then
+            	coinside+=H
+           	else
+            	coinside+=T
+            fi
+		done
+		sort_combination[$coinside]=$((${sort_combination[$coinside]}+1))
+	done
+	echo "${sort_combination[@]}"
 
-for j in ${!sort_combination[@]}
-do
-sort_combination[$j]=$(($(sort_combination[$j])/$n1*100))
-temp=${sort_combination[$j]}
-if [ $temp -ge $maximum ]
-then
-maximum=$temp
-new=$i
-fi
-done
-echo "maximum is $maximum=$i"
+	for j in ${!sort_combination[@]}
+	do
+		sort_combination[$j]=$(( ${sort_combination[$j]} * 100 / $n3 ))
+		temp=${sort_combination[$j]}
+		if [ $temp -ge $maximum ]
+		then
+			maximum=$temp
+			new=$J
+		fi
+	done
+	echo "maximum is $maximum=$i"
+}
+
+winner
