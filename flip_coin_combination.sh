@@ -102,7 +102,7 @@ function doublet()
 #to get triplet combination
 function triplet()
 {
-	read -p "Enter number to flip" n2
+	read -p "Enter number to flip : " n2
 	declare -A tripletflip
 	num_of_coin=3
 	tripletflip=0
@@ -127,17 +127,58 @@ function triplet()
 	do
 		echo tripletflip[$index]="$(( ${tripletflip[$index]} * 100 / $n2 ))"
 	done
+	echo "triplet percentage is :"
+	echo ${tripletflip[@]}
 }
 
+#to sort singlet,doblet,triplet combination
+function winner()
+{
+	declare -A sort_combination
+	maximum=0
+	temp=0
+	echo "enter a number to flip coins"
+	read n3
+	for((index=0; index<$n3; index++))
+	do
+		for((coinindex=0; coinindex<2; coinindex++))
+		do
+      		r4=$(($RANDOM%2))
+            if [ $r4 -eq 0 ]
+            then
+            	coinside+=H
+           	else
+            	coinside+=T
+            fi
+		done
+		sort_combination[$coinside]=$((${sort_combination[$coinside]}+1))
+	done
+	echo "${sort_combination[@]}"
+
+	for j in ${!sort_combination[@]}
+	do
+		sort_combination[$j]="$(( ${sort_combination[$j]} * 100 / $n3 ))"
+		temp=${sort_combination[$j]}
+		if [ $temp -ge $maximum ]
+		then
+			maximum=$temp
+			new=$J
+		fi
+	done
+	echo "maximum is $maximum=$i"
+}
+
+
 echo "enter the flipping combination from below option : "
-echo -ne " 1.singlet \n 2.doublet \n 3.triplet \n enter your choice "
+echo -ne " 1.singlet \n 2.doublet \n 3.triplet \n 4.winning combination \n enter your choice "
 read choice
 case $choice in
 
-	1) singlet
-		;;
-	2) doublet
-		;;
-	3) triplet
-		;;
+   1) singlet
+      ;;
+   2) doublet
+      ;;
+   3) triplet
+      ;;
+	4) winner
 esac
