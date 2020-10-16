@@ -47,6 +47,9 @@ singletTailPercentage="$(( $Tcount * 100 / $n ))"
 echo "singletHeadPercentage  = $singletHeadPercentage %  &  singletTailPercentage = $singletTailPercentage %"
 
 #to find doublet combination
+echo "Enter flip times for doublet"
+read n1
+
 count=0
 count1=0
 count2=0
@@ -56,39 +59,42 @@ percent1=0
 percent2=0
 percent3=0
 percent4=0
-declare -A Doublet
-for (( i=1; i<$n; i++ ))
-do
 
-	r2=$(( $RANDOM % 4 ))
+declare -A Doublet
+for (( i=1; i<$n1; i++ ))
+do
+count=$(($count+1))
+
+        r2=$(( $RANDOM % 4 ))
 
 if [ $r2 -eq 0 ]
 then
-	count1=$(( $count1 + 1 ))
-	percent1="$(( $count * 100 / $count ))"
+        count1=$(($count1+1))
+        percent1="$(($count*100/$count))"
 
 elif [ $r2 -eq 1 ]
 then
-	count1=$(( $count2 + 1 ))
-	percent1="$(( $count2 * 100 / $count ))"
+        count1=$(($count2+1))
+        percent1="$(($count2*100/$count))"
 
 elif [ $r2 -eq 2 ]
 then
-	count2=$(( $count2 + 1 ))
-	percent2="$(( $count2 * 100 / $count ))"
+        count2=$(($count2+1))
+        percent2="$(($count2*100/$count))"
 
 elif [ $r2 -eq 3 ]
 then
-	count3=$(( $count3 + 1 ))
-	percent3="$(( $count3 * 100 / $count ))"
+        count3=$(($count3+1))
+        percent3="$(($count3*100/$count))"
 fi
 Doublet[0]="HH:$percent1"
-Doublet[1]="HH:$percent2"
-Doublet[2]="HH:$percent3"
-Doublet[3]="HH:$percent4"
+Doublet[1]="HT:$percent2"
+Doublet[2]="TH:$percent3"
+Doublet[3]="TT:$percent4"
 done
 echo "Outcomes with doublet percentage is :"
-echo ${doublet[@]}
+
+echo ${Doublet[@]}
 
 #to get triplet combination
 declare -A tripletflip
@@ -123,7 +129,7 @@ declare -A sort_combination
 maximum=0
 temp=0
 echo "enter a number to flip coins"
-read n1
+read n2
 for((index=0; index<$n1; index++))
 do
         for((coinindex=0; coinindex<2; coinindex++))
@@ -142,7 +148,7 @@ echo "${sort_combination[@]}"
 
 for j in ${!sort_combination[@]}
 do
-sort_combination[$j]=$(($(sort_combination[$j])/$n1*100))
+sort_combination[$j]="$((${sort_combination[$j]}*100/$n2))"
 temp=${sort_combination[$j]}
 if [ $temp -ge $maximum ]
 then
@@ -151,3 +157,7 @@ new=$i
 fi
 done
 echo "maximum is $maximum=$i"
+
+
+
+
